@@ -8,10 +8,12 @@
 
 #import "MasterViewController.h"
 #import "DetailViewController.h"
+#import "CustomTableViewCell.h"
 #import "CoreDataStack.h"
 
 @interface MasterViewController ()
 @property (nonatomic, strong) CoreDataStack *stack;
+@property (strong, nonatomic) IBOutlet UISwipeGestureRecognizer *swipeGesture;
 
 @end
 
@@ -30,18 +32,18 @@
     
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Task"];
     fetchRequest.fetchLimit = 10;
-    NSSortDescriptor *taskTitle = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES];
+    NSSortDescriptor *taskTitle = [NSSortDescriptor sortDescriptorWithKey:@"priority" ascending:YES];
     fetchRequest.sortDescriptors = @[taskTitle];
     
     NSError *fetchError = nil;
     
     
-    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.stack.managedObjectContext sectionNameKeyPath:@"title" cacheName:nil];
+    self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.stack.managedObjectContext sectionNameKeyPath:@"priority" cacheName:nil];
     
     self.fetchedResultsController.delegate = self;
     [self.fetchedResultsController performFetch:&fetchError];
     
-    
+    [self.view addGestureRecognizer:self.swipeGesture];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -113,7 +115,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    CustomTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
@@ -138,9 +140,21 @@
     }
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)configureCell:(CustomTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    
     Task *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = object.title;
+    if (object.completed) {
+        NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:object.title];
+        [attributeString addAttribute:NSStrikethroughStyleAttributeName
+                                value:@2
+                                range:NSMakeRange(0, [attributeString length])];
+        
+        cell.taskLabel.attributedText = attributeString;
+    }else {
+        cell.taskLabel.text = object.title;
+    }
+    cell.taskDescription.text = object.taskDescription;
+    cell.taskPriority.text = [NSString stringWithFormat:@"%i",object.priority];
 }
 
 #pragma mark - Fetched results controller
@@ -160,7 +174,7 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"priority" ascending:NO];
     
     [fetchRequest setSortDescriptors:@[sortDescriptor]];
     
@@ -229,35 +243,26 @@
     }
 }
 
+
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     [self.tableView endUpdates];
 }
 
 
-/*
- // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
- 
- - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
- {
- // In the simplest, most efficient, case, reload the table view.
- [self.tableView reloadData];
- }
- */
-
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return YES;
 }
 
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-//    Task *task = [self.objects objectAtIndex:fromIndexPath.row];
-//    [self.objects removeObjectAtIndex:fromIndexPath.row];
-//    [self.objects insertObject:task atIndex:toIndexPath.row];
 
+- (IBAction)swipeComplete:(UISwipeGestureRecognizer *)sender {
     
-    
+    CGPoint location = [sender locationInView:self.tableView];
+    NSIndexPath *swipedIndexPath = [self.tableView indexPathForRowAtPoint:location];
+    Task *object = [[self fetchedResultsController] objectAtIndexPath:swipedIndexPath];
+    object.completed = YES;
+    [self.tableView reloadRowsAtIndexPaths:@[swipedIndexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 @end

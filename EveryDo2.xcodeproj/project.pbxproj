@@ -21,6 +21,7 @@
 		DACE756E1BF3D73C00FD56C9 /* CoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = DACE756D1BF3D73C00FD56C9 /* CoreDataStack.m */; };
 		DACE75B91BF3F16600FD56C9 /* Task+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = DACE75B81BF3F16600FD56C9 /* Task+CoreDataProperties.m */; };
 		DACE75BC1BF3F24300FD56C9 /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DACE75BB1BF3F24300FD56C9 /* AddViewController.m */; };
+		DACE75BF1BF4497700FD56C9 /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DACE75BE1BF4497700FD56C9 /* CustomTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,8 @@
 		DACE75B81BF3F16600FD56C9 /* Task+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Task+CoreDataProperties.m"; sourceTree = "<group>"; };
 		DACE75BA1BF3F24300FD56C9 /* AddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddViewController.h; sourceTree = "<group>"; };
 		DACE75BB1BF3F24300FD56C9 /* AddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddViewController.m; sourceTree = "<group>"; };
+		DACE75BD1BF4497700FD56C9 /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
+		DACE75BE1BF4497700FD56C9 /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +132,8 @@
 				DACE75391BF3CDF800FD56C9 /* DetailViewController.m */,
 				DACE75BA1BF3F24300FD56C9 /* AddViewController.h */,
 				DACE75BB1BF3F24300FD56C9 /* AddViewController.m */,
+				DACE75BD1BF4497700FD56C9 /* CustomTableViewCell.h */,
+				DACE75BE1BF4497700FD56C9 /* CustomTableViewCell.m */,
 				DACE753B1BF3CDF800FD56C9 /* Main.storyboard */,
 				DACE753E1BF3CDF800FD56C9 /* Assets.xcassets */,
 				DACE75401BF3CDF800FD56C9 /* LaunchScreen.storyboard */,
@@ -314,6 +319,7 @@
 				DACE75311BF3CDF800FD56C9 /* AppDelegate.m in Sources */,
 				DACE75341BF3CDF800FD56C9 /* EveryDo2.xcdatamodeld in Sources */,
 				DACE752E1BF3CDF800FD56C9 /* main.m in Sources */,
+				DACE75BF1BF4497700FD56C9 /* CustomTableViewCell.m in Sources */,
 				DACE75BC1BF3F24300FD56C9 /* AddViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -538,6 +544,7 @@
 				DACE755E1BF3CDF800FD56C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DACE755F1BF3CDF800FD56C9 /* Build configuration list for PBXNativeTarget "EveryDo2Tests" */ = {
 			isa = XCConfigurationList;
@@ -546,6 +553,7 @@
 				DACE75611BF3CDF800FD56C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DACE75621BF3CDF800FD56C9 /* Build configuration list for PBXNativeTarget "EveryDo2UITests" */ = {
 			isa = XCConfigurationList;
@@ -554,6 +562,7 @@
 				DACE75641BF3CDF800FD56C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
